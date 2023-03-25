@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\omrah\\Downloads\\WeatherReport\\WeatherReport\\WeatherReport\\WeatherReport.csproj": {}
+    "C:\\Users\\omrah\\Downloads\\EmersonProject\\EmersonAssignment\\WeatherReport\\WeatherReport.csproj": {}
   },
   "projects": {
-    "C:\\Users\\omrah\\Downloads\\WeatherReport\\WeatherReport\\WeatherReport\\WeatherReport.csproj": {
+    "C:\\Users\\omrah\\Downloads\\EmersonProject\\EmersonAssignment\\WeatherReport\\WeatherReport.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\omrah\\Downloads\\WeatherReport\\WeatherReport\\WeatherReport\\WeatherReport.csproj",
+        "projectUniqueName": "C:\\Users\\omrah\\Downloads\\EmersonProject\\EmersonAssignment\\WeatherReport\\WeatherReport.csproj",
         "projectName": "WeatherReport",
-        "projectPath": "C:\\Users\\omrah\\Downloads\\WeatherReport\\WeatherReport\\WeatherReport\\WeatherReport.csproj",
+        "projectPath": "C:\\Users\\omrah\\Downloads\\EmersonProject\\EmersonAssignment\\WeatherReport\\WeatherReport.csproj",
         "packagesPath": "C:\\Users\\omrah\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\omrah\\Downloads\\WeatherReport\\WeatherReport\\WeatherReport\\obj\\",
+        "outputPath": "C:\\Users\\omrah\\Downloads\\EmersonProject\\EmersonAssignment\\WeatherReport\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

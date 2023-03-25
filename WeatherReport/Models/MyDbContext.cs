@@ -13,4 +13,5 @@ namespace WeatherReport.Models
         public DbSet<Variable> Variables { get; set; }
 
     }
+
 }

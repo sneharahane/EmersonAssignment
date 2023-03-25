@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "vYRQ4P6XV/UKdkjpF3FT3C5goGO1/ODLsZ25R249dlaBTLrUmqtOfYcRnO0wiMvF8PUMo4PiRUperDMzYvZ6wA==",
+  "dgSpecHash": "Or71ndQHNa+Idh7PBgpc1rqm1SxcZlq6O97wHXV1eF3Mh0FSAC22Lv72eDob3jLk70vAY9aC0j2FDgKeZ7E7eA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\omrah\\Downloads\\WeatherReport\\WeatherReport\\WeatherReport\\WeatherReport.csproj",
+  "projectFilePath": "C:\\Users\\omrah\\Downloads\\EmersonProject\\EmersonAssignment\\WeatherReport\\WeatherReport.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\omrah\\.nuget\\packages\\azure.core\\1.24.0\\azure.core.1.24.0.nupkg.sha512",
     "C:\\Users\\omrah\\.nuget\\packages\\azure.identity\\1.6.0\\azure.identity.1.6.0.nupkg.sha512",

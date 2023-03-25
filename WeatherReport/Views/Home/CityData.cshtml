@@ -1,16 +1,138 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "CityData";
 }
 <head>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
+
 </head>
-<div class="card">
-    <div class="card-header">
-        Hottest City
+<div class="container">
+    <div class="row">
+        <div class="col-6">
+            <div class="card">
+                <div class="card-header">
+                    Hottest City
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">@Model.CityName</h5>
+                    <p class="card-text">Total days above 30 degrees Celsius: @Model.TotalDaysAbove30Celsius</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="card">
+                <div class="card-header">
+                    Hottest City
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">@Model.CityName</h5>
+                    <p class="card-text">Total days above 30 degrees Celsius: @Model.TotalDaysAbove30Celsius</p>
+                </div>
+            </div>
+        </div>
+
     </div>
-    <div class="card-body">
-        <h5 class="card-title">@Model.CityName</h5>
-        <p class="card-text">Total days above 30 degrees Celsius: @Model.TotalDaysAbove30Celsius</p>
+
+    <div class="row">
+        <div class="col-4">
+            <div class="form-group">
+                <label for="citySelect">City:</label>
+                <select id="citySelect" class="form-control">
+                    <option value="1">Singapore</option>
+                    <option value="2">Kuala Lumpur</option>
+                    <option value="3">Bangalore</option>
+                    <option value="3">Colombo</option>
+                </select>
+            </div>
+        </div>       
+        <div class="col-4">
+            <div class="form-group">
+                <label for="startDateTime">Start Date:</label>
+                <input type="datetime-local" id="startDateTime" class="form-control">
+            </div>
+        </div>
+        <div class="col-4">
+
+            <div class="form-group">
+                <label for="endDateTime">End Date:</label>
+                <input type="datetime-local" id="endDateTime" class="form-control">
+            </div>
+        </div>
+        <button type="button" id="updateChartButton" class="btn btn-primary" style="margin-top:20px">Update Chart</button>
+
+        <div id="temperatureChartContainer">
+            <canvas id="temperatureChart"></canvas>
+        </div>
     </div>
 </div>
+@section scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+
+    <script>
+        $(function () {
+            var ctx = document.getElementById('temperatureChart').getContext('2d');
+            var chart;
+
+            function updateChart() {
+                var cityId = $('#citySelect').val();
+                var startDateTime = $('#startDateTime').val();
+                var endDateTime = $('#endDateTime').val();
+
+                $.ajax({
+                    url: '@Url.Action("GetVariableData", "Home")',
+                    type: 'GET',
+                    dataType: 'json',
+                    data: {
+                        cityId: cityId,
+                        startDateTime: startDateTime,
+                        endDateTime: endDateTime
+                    },
+                    success: function (response) {
+                        if (chart) {
+                            chart.destroy();
+                        }
+
+                        chart = new Chart(ctx, {
+                            type: 'line',
+                            data: {
+                                labels: response.labels,
+                                datasets: [{
+                                    label: 'Temperature',
+                                    data: response.data,
+                                    borderColor: '#3e95cd',
+                                    fill: false
+                                }, {
+                                    label: 'Low Threshold',
+                                    data: response.lowThreshold,
+                                    borderColor: '#ff7f0e',
+                                    fill: '+1'
+                                }, {
+                                    label: 'High Threshold',
+                                    data: response.highThreshold,
+                                    borderColor: '#ff0000',
+                                    fill: '-1'
+                                }]
+                            },
+                            options: {
+                                title: {
+                                    display: true,
+                                    text: 'Temperature Trend Chart'
+                                },
+                                scales: {
+                                    xAxes: [{
+                                        type: 'time',
+                                        time: {
+                                            unit: 'hour'
+                                        }
+                                    }]
+                                }
+                            }
+                        });
+                    },
+                    error: function (xhr, textStatus, errorThrown) {
+                        console.log('Error: ' + errorThrown);
+                    }
+                });
+            });
+                                            });
+    </script>
+    }

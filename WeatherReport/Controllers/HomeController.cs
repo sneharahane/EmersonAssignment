@@ -1,11 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Diagnostics;
 using WeatherReport.Models;
 
 namespace WeatherReport.Controllers
 {
-    [Route("api/[controller]")]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -15,6 +13,12 @@ namespace WeatherReport.Controllers
         {
             _logger = logger;
             _dbContext = dbContext;
+        }
+
+        
+        public IActionResult Privacy()
+        {
+            return View();
         }
 
         [HttpGet("{variableName}/{startTimestamp:datetime}/{endTimestamp:datetime}/{cityName?}")]
@@ -34,23 +38,24 @@ namespace WeatherReport.Controllers
             return View(query.ToList());
         }
 
-        [Route("CityData")]
-        public ViewResult CityData()
+        [Route("")]
+        public async Task <ViewResult> CityData()
         {
             var january2023Start = new DateTime(2023, 1, 1);
             var january2023End = new DateTime(2023, 1, 31, 23, 59, 59);
+            int temperature;
+            var hottestCity = await _dbContext.Cities
+            .Select(c => new
+            {
+                name = c.CityName,
+                TotalDaysAbove30Celsius = c.Variables
+                    .Where(v => v.Name == "Temperature" && int.TryParse(v.Value, out temperature) && temperature > 30 && v.Timestamp >= january2023Start && v.Timestamp <= january2023End)
+                    .Count()
+            })
+            .OrderByDescending(c => c.TotalDaysAbove30Celsius)
+            .FirstOrDefaultAsync();
 
-            var hottestCity =  _dbContext.Cities
-                    .Select(c => new
-                    {
-                        name = c.CityName,
-                        TotalDaysAbove30Celsius = c.Variables
-                            .Count(v => v.Name == "Temperature" && Convert.ToUInt32(v.Value) > 30 && v.Timestamp >= january2023Start && v.Timestamp <= january2023End)
-                    })
-                    .OrderByDescending(c => c.TotalDaysAbove30Celsius)
-                    .FirstOrDefault();
-
-                var viewModel = new HottestCityViewModel
+            var viewModel = new HottestCityViewModel
                 {
                     Title = "Hottest City",
                     CityName = hottestCity.name,
